@@ -1,5 +1,5 @@
 {
-    "name": "paragonie/cookie",
+    "name": "muglug/cookie",
     "description": "Modern cookie management for PHP 7",
     "require": {
         "php": "^7",
@@ -7,11 +7,11 @@
     },
     "type": "library",
     "keywords": [ "cookie", "cookies", "http", "csrf", "xss", "samesite", "same-site" ],
-    "homepage": "https://github.com/paragonie/PHP-Cookie",
+    "homepage": "https://github.com/muglug/PHP-Cookie",
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "ParagonIE\\Cookie\\": "src/"
+            "Muglug\\Cookie\\": "src/"
         }
     }
 }
