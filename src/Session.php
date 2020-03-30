@@ -6,7 +6,7 @@ declare(strict_types=1);
  * Copyright (c) delight.im (https://www.delight.im/)
  * Licensed under the MIT License (https://opensource.org/licenses/MIT)
  */
-namespace ParagonIE\Cookie;
+namespace Muglug\Cookie;
 
 use Delight\Http\ResponseHeader;
 
@@ -29,11 +29,13 @@ final class Session
      *                                    requests (either `Lax`, `Strict`, or
      *                                    en empty string.)
      * @param array $sessionConfig        Session configuration
+     *
+     * @return void
      */
     public static function start(
         string $sameSiteRestriction = Cookie::SAME_SITE_RESTRICTION_STRICT,
         array $sessionConfig = []
-    ) {
+    ): void {
         // run PHP's built-in equivalent
         \session_start($sessionConfig);
 
@@ -69,11 +71,13 @@ final class Session
      *                                    be sent along with cross-site
      *                                    requests (either `Lax`, `Strict`, or
      *                                    en empty string.)
+     *
+     * @return void
      */
     public static function regenerate(
         bool $deleteOldSession = false,
         string $sameSiteRestriction = Cookie::SAME_SITE_RESTRICTION_STRICT
-    ) {
+    ): void {
         // run PHP's built-in equivalent
         \session_regenerate_id($deleteOldSession);
 
@@ -140,8 +144,10 @@ final class Session
      *
      * @param string $key the key to set the value for
      * @param mixed $value the value to set
+     *
+     * @return void
      */
-    public static function set(string $key, $value)
+    public static function set(string $key, $value): void
     {
         $_SESSION[$key] = $value;
     }
@@ -150,8 +156,10 @@ final class Session
      * Removes the value for the specified key from the session
      *
      * @param string $key the key to remove the value for
+     *
+     * @return void
      */
-    public static function delete(string $key)
+    public static function delete(string $key): void
     {
         unset($_SESSION[$key]);
     }
@@ -163,10 +171,12 @@ final class Session
      *                                    be sent along with cross-site
      *                                    requests (either `Lax`, `Strict`, or
      *                                    en empty string.)
+     *
+     * @return void
      */
     private static function rewriteCookieHeader(
         $sameSiteRestriction = Cookie::SAME_SITE_RESTRICTION_STRICT
-    ) {
+    ): void {
         // get and remove the original cookie header set by PHP
         $originalCookieHeader = ResponseHeader::take('Set-Cookie', \session_name() . '=');
 

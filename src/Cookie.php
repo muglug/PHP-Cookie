@@ -8,7 +8,7 @@ declare(strict_types=1);
  * Forked by Paragon Initiative Enterprises.
  */
 
-namespace ParagonIE\Cookie;
+namespace Muglug\Cookie;
 
 /**
  * Modern cookie management for PHP
@@ -32,6 +32,7 @@ final class Cookie
 {
     const SAME_SITE_RESTRICTION_LAX = 'Lax';
     const SAME_SITE_RESTRICTION_STRICT = 'Strict';
+    const SAME_SITE_RESTRICTION_NONE = 'None';
 
     /**
      * @var string The name of the cookie which is also the key for future
@@ -297,6 +298,8 @@ final class Cookie
      * @return bool                       Whether the cookie header has successfully
      *                                    been sent (and will *probably* cause
      *                                    the client to set the cookie).
+     *
+     * @psalm-param self:SAME_SITE_RESTRICTION_* $sameSiteRestriction
      */
     public static function setcookie(
         string $name,
@@ -352,6 +355,7 @@ final class Cookie
      *                                    be sent along with cross-site
      *                                    requests (either `Lax`, `Strict`, or
      *                                    an empty string).
+     * @psalm-param self:SAME_SITE_RESTRICTION_* $sameSiteRestriction
      * @return string the HTTP header
      * @throws \Exception
      */
@@ -421,6 +425,9 @@ final class Cookie
         }
         elseif ($sameSiteRestriction === self::SAME_SITE_RESTRICTION_STRICT) {
             $headerStr .= '; SameSite=Strict';
+        }
+        else {
+            $headerStr .= '; SameSite=None';
         }
 
         return $headerStr;
